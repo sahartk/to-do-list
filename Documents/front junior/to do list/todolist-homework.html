@@ -1,0 +1,103 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+        }
+        input {
+            width: 75%;
+            padding: 10px;
+            margin-right: 5px;
+            border: 1px solid #0e0101;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #108c8a;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #36dcb8;
+        }
+        .list {
+            list-style: none;
+            padding: 0;
+        }
+        .list li {
+            background: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .list li.done {
+            text-decoration: line-through;
+            color: #777;
+            background-color: #d4edda;
+        }
+        .deleteItem {
+            color: #000;
+            cursor: pointer;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+        .deleteItem:hover {
+            color: rgb(115, 35, 35);
+        }
+    </style>
+</head>
+<body>
+    <input placeholder="Please enter your task!" />
+    <button onclick="add()">Add</button>
+    <ul class="list"></ul>     
+    <script>
+        function resetInput(input) {
+            input.value = "";           
+            input.focus();
+        }
+
+        function add() {
+            var input = document.querySelector("input");
+            var trimmedInputText = input.value.trim();
+            
+            if (trimmedInputText.length >= 3) {
+                var li = document.createElement("LI"); 
+                var deleteElement = document.createElement("SPAN");
+                li.innerHTML = trimmedInputText;
+                deleteElement.innerHTML = "X";
+                deleteElement.classList.add("deleteItem");
+                deleteElement.addEventListener("click", function() {
+                    li.remove();
+                    resetInput(input);
+                });
+                li.addEventListener("click", function() {
+                    li.classList.toggle("done");
+                });
+                li.appendChild(deleteElement);
+                li.classList.add("item");
+                document.querySelector(".list").appendChild(li);
+            } else {
+                alert("Please enter at least 3 characters!");
+            }
+            resetInput(input);
+        }
+
+        var input = document.querySelector("input");
+        input.focus();
+        input.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                add();
+            }
+        });
+    </script>
+</body>
+</html>
